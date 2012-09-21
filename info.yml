@@ -18,6 +18,9 @@ configuration:
         default_value: true
 
 
+# the engines that this app can operate in:
+supported_engines: [tk-nuke, tk-maya]
+
 # the Shotgun fields that this app needs in order to operate correctly
 requires_shotgun_fields:
 
