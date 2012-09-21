@@ -1,0 +1,23 @@
+#
+# Copyright (c) 2012 Shotgun Software, Inc
+# ----------------------------------------------------
+#
+# Metadata defining the behaviour and requirements for this app
+
+# expected fields in the configuration file for this app
+configuration:
+
+    template_work:
+        type: template
+        description: A reference to a template which locates a work file on disk.
+        required_fields: [name, version]
+
+    launch_at_startup:
+        type: bool
+        description: A flag whether to launch this app's ui as soon as nuke starts up.
+        default_value: true
+
+
+# the Shotgun fields that this app needs in order to operate correctly
+requires_shotgun_fields:
+
