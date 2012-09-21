@@ -127,7 +127,7 @@ class WorkFileBrowserWidget(BrowserWidget):
             i.set_details("<br>".join(details))
             if r["file_owner_thumb"] is None:
                 # no user thumb. Assign default thumb
-                i.set_thumbnail(":/res/nuke_work_file.png")
+                i.set_thumbnail(":/res/work_file.png")
             else:
                 i.set_thumbnail(r["file_owner_thumb"])
 

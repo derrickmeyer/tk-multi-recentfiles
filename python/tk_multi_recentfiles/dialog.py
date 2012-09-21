@@ -2,7 +2,6 @@
 Copyright (c) 2012 Shotgun Software, Inc
 ----------------------------------------------------
 """
-import nuke
 import tank
 import os
 import sys

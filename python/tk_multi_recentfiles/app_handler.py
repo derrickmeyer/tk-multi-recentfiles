@@ -2,7 +2,6 @@
 Copyright (c) 2012 Shotgun Software, Inc
 ----------------------------------------------------
 """
-import nukescripts
 import tempfile
 import nuke
 import os
@@ -25,7 +24,6 @@ class AppHandler(object):
         # do the import just before so that this app can run nicely in nuke
         # command line mode,
         from .dialog import AppDialog
-        
         
         # some QT notes here. Need to keep the dialog object from being GC-ed
         # otherwise pyside will go hara kiri. QT has its own loop to track

@@ -4,7 +4,7 @@
 # ----------------------------------------------------
 
 echo "building user interfaces..."
-pyside-uic --from-imports dialog.ui > ../python/tk_nuke_recentfiles/ui/dialog.py
+pyside-uic --from-imports dialog.ui > ../python/tk_multi_recentfiles/ui/dialog.py
 
 echo "building resources..."
-pyside-rcc resources.qrc > ../python/tk_nuke_recentfiles/ui/resources_rc.py
+pyside-rcc resources.qrc > ../python/tk_multi_recentfiles/ui/resources_rc.py
