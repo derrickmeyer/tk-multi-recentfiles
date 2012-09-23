@@ -3,7 +3,6 @@ Copyright (c) 2012 Shotgun Software, Inc
 ----------------------------------------------------
 """
 import tempfile
-import nuke
 import os
 import platform
 import sys
@@ -21,7 +20,7 @@ class AppHandler(object):
         self._app = app
 
     def show_dialog(self):
-        # do the import just before so that this app can run nicely in nuke
+        # do the import just before so that this app can run nicely in 
         # command line mode,
         from .dialog import AppDialog
         

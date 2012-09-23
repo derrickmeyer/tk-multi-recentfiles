@@ -14,7 +14,7 @@ configuration:
 
     launch_at_startup:
         type: bool
-        description: A flag whether to launch this app's ui as soon as nuke starts up.
+        description: A flag whether to launch this app's UI at startup.
         default_value: true
 
 
