@@ -95,17 +95,49 @@ class AppDialog(QtGui.QDialog):
         d = {}
         self.ui.browser.load(d)
         
+    def load_item(self):
+        """
+        Load something into the scene
+        """
+        curr_selection = self.ui.browser.get_selected_item()
+        if curr_selection is None:
+            return
+        
+        self.load_item_from_path(curr_selection.path)
+        
+        
     def load_item_from_path(self, path):
         
         if self._app.engine.name == "tk-nuke":
+            self.load_item_from_path_nuke(path)
+        elif self._app.engine.name == "tk-maya":
+            self.load_item_from_path_maya(path)
+        elif self._app.engine.name == "tk-motionbuilder":
+            self.load_item_from_path_motionbuilder(path)
+        else:
+            raise tank.TankError("Unsupported engine!")
+        
+        
+        
+        
+        
+        # close dialog
+        self.done(0)
+                
+        
+        ##########################################################################################
+        
+        def load_item_from_path_nuke(self, path):
+            
             import nuke
             # fix slashes
             path = path.replace(os.sep, "/")
             # open
             nuke.scriptOpen(path)
             
-        elif self._app.engine.name == "tk-maya":
-        
+            
+        def load_item_from_path_maya(self, path):
+            
             import pymel.core as pm
             import maya.cmds as cmds
             # fix slashes
@@ -151,26 +183,11 @@ class AppDialog(QtGui.QDialog):
             # okay all good to go. Scene is saved and has a name.
             # now we can safely replace it with the desired scene... :)
             pm.system.openFile(path)
-        
-        
-        else:
-            raise tank.TankError("Unsupported engine!")
-        
-        
-        
-        
-        
-        # close dialog
-        self.done(0)
-                
-        
-    def load_item(self):
-        """
-        Load something into the scene
-        """
-        curr_selection = self.ui.browser.get_selected_item()
-        if curr_selection is None:
-            return
-        
-        self.load_item_from_path(curr_selection.path)
-        
+            
+            
+        def load_item_from_path_motionbuilder(self, path):
+
+            from pyfbsdk import FBApplication
+            app = FBApplication()
+            app.FileOpen(path)
+            
