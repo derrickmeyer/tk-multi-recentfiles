@@ -117,77 +117,73 @@ class AppDialog(QtGui.QDialog):
         else:
             raise tank.TankError("Unsupported engine!")
         
-        
-        
-        
-        
         # close dialog
         self.done(0)
                 
         
         ##########################################################################################
         
-        def load_item_from_path_nuke(self, path):
+    def load_item_from_path_nuke(self, path):
+        
+        import nuke
+        # fix slashes
+        path = path.replace(os.sep, "/")
+        # open
+        nuke.scriptOpen(path)
+        
+        
+    def load_item_from_path_maya(self, path):
+        
+        import pymel.core as pm
+        import maya.cmds as cmds
+        # fix slashes
+        path = path.replace(os.sep, "/")
+        
+        if cmds.file(query=True, modified=True):
             
-            import nuke
-            # fix slashes
-            path = path.replace(os.sep, "/")
-            # open
-            nuke.scriptOpen(path)
+            # changes have been made to the scene
+            res = QtGui.QMessageBox.question(self,
+                                             "Save your scene?",
+                                             "Your scene has unsaved changes. Save before proceeding?",
+                                             QtGui.QMessageBox.Yes|QtGui.QMessageBox.No|QtGui.QMessageBox.Cancel)
             
-            
-        def load_item_from_path_maya(self, path):
-            
-            import pymel.core as pm
-            import maya.cmds as cmds
-            # fix slashes
-            path = path.replace(os.sep, "/")
-            
-            if cmds.file(query=True, modified=True):
-                
-                # changes have been made to the scene
-                res = QtGui.QMessageBox.question(self,
-                                                 "Save your scene?",
-                                                 "Your scene has unsaved changes. Save before proceeding?",
-                                                 QtGui.QMessageBox.Yes|QtGui.QMessageBox.No|QtGui.QMessageBox.Cancel)
-                
-                if res == QtGui.QMessageBox.Cancel:
-                    # return to dialog
-                    return
-    
-                elif res == QtGui.QMessageBox.No:
-                    # don't save!
-                    pm.system.openFile(path, force=True)
-                
-                else:
-                    # save before!
-                    
-                    if pm.sceneName() != "":
-                        # scene has a name!
-                        # normal save
-                        cmds.file(save=True, force=True)
-                    else:
-                        # scene does not have a name. 
-                        # save as dialog
-                        cmds.SaveSceneAs()
-                        # not sure about return value here, so check the scene!
-                        if cmds.file(query=True, modified=True):
-                            # still unsaved changes
-                            # assume user clicked cancel in dialog
-                            self.done(0)
-                            return
-                        
-            # close dialog
-            self.done(0)
-    
-            # okay all good to go. Scene is saved and has a name.
-            # now we can safely replace it with the desired scene... :)
-            pm.system.openFile(path)
-            
-            
-        def load_item_from_path_motionbuilder(self, path):
+            if res == QtGui.QMessageBox.Cancel:
+                # return to dialog
+                return
 
-            from pyfbsdk import FBApplication
-            app = FBApplication()
-            app.FileOpen(path)
+            elif res == QtGui.QMessageBox.No:
+                # don't save!
+                pm.system.openFile(path, force=True)
             
+            else:
+                # save before!
+                
+                if pm.sceneName() != "":
+                    # scene has a name!
+                    # normal save
+                    cmds.file(save=True, force=True)
+                else:
+                    # scene does not have a name. 
+                    # save as dialog
+                    cmds.SaveSceneAs()
+                    # not sure about return value here, so check the scene!
+                    if cmds.file(query=True, modified=True):
+                        # still unsaved changes
+                        # assume user clicked cancel in dialog
+                        self.done(0)
+                        return
+                    
+        # close dialog
+        self.done(0)
+
+        # okay all good to go. Scene is saved and has a name.
+        # now we can safely replace it with the desired scene... :)
+        pm.system.openFile(path)
+        
+        
+    def load_item_from_path_motionbuilder(self, path):
+
+        from pyfbsdk import FBApplication
+        app = FBApplication()
+        app.FileOpen(path)
+        
