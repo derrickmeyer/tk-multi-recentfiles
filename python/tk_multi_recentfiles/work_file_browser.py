@@ -114,7 +114,7 @@ class WorkFileBrowserWidget(BrowserWidget):
             i = self.add_item(ListItem)                
             
             details = []
-            details.append("<b>%s.nk</b>" % r["name"])
+            details.append("<b>File: %s</b>" % r["name"])
             details.append("Latest version: %03d" % r["version"])
             details.append("Last updated: %s" % time_stamp)
             
