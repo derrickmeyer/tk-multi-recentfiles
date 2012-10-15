@@ -14,7 +14,7 @@ class RecentFiles(tank.platform.Application):
         """
         Called as the application is being initialized
         """
-        import tk_multi_recentfiles
+        tk_multi_recentfiles = self.import_module("tk_multi_recentfiles")
         self.app_handler = tk_multi_recentfiles.AppHandler(self)
 
         # add stuff to main menu
