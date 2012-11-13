@@ -10,11 +10,11 @@ import threading
 
 
 from PySide import QtCore, QtGui
-from .browser_widget import BrowserWidget
-from .browser_widget import ListItem
-from .browser_widget import ListHeader
 
-class WorkFileBrowserWidget(BrowserWidget):
+browser_widget = tank.platform.import_framework("tk-framework-widget", "browser_widget")
+
+
+class WorkFileBrowserWidget(browser_widget.BrowserWidget):
 
     history_item_action = QtCore.Signal(str)
     
@@ -111,7 +111,7 @@ class WorkFileBrowserWidget(BrowserWidget):
             
             time_stamp = datetime.datetime.fromtimestamp(r["mtime"])
 
-            i = self.add_item(ListItem)                
+            i = self.add_item(browser_widget.ListItem)                
             
             details = []
             details.append("<b>File: %s</b>" % r["name"])
