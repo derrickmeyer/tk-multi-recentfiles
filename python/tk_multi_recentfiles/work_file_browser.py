@@ -19,7 +19,7 @@ class WorkFileBrowserWidget(browser_widget.BrowserWidget):
     history_item_action = QtCore.Signal(str)
     
     def __init__(self, parent=None):
-        BrowserWidget.__init__(self, parent)
+        browser_widget.BrowserWidget.__init__(self, parent)
         self._user_thumb_mapping = {}
 
     def open_history_file(self):
