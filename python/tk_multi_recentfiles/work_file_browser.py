@@ -65,7 +65,7 @@ class WorkFileBrowserWidget(browser_widget.BrowserWidget):
         # add recent items to the context menu
         # data structure for organising stuff
         work_items = {}
-        
+
         # now get all work items
         tw = self._app.get_template("template_work")
         ctx_fields = self._app.context.as_template_fields(tw)
@@ -94,7 +94,8 @@ class WorkFileBrowserWidget(browser_widget.BrowserWidget):
                          "file_owner_thumb": self.get_file_owner_thumb_url(path),
                          "mtime": os.path.getmtime(path)})
 
-        return data
+        # get data always need to return a dict
+        return {"data": data}
             
 
 
@@ -102,6 +103,9 @@ class WorkFileBrowserWidget(browser_widget.BrowserWidget):
 
         # result is a list of dicts on the form:
         # {"name": name, "version": max_ver, "path": path, "mtime": 122312}
+        
+        # pull out the list of matches
+        result = result["data"]
         
         if len(result) == 0:
             self.set_message("No items found!")
