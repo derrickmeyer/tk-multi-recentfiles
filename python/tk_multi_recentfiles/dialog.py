@@ -12,13 +12,11 @@ from .ui.dialog import Ui_Dialog
 
 class AppDialog(TankQDialog):
 
-    def __init__(self, parent=None):
-        TankQDialog.__init__(self, parent)
+    def __init__(self, app):
+        TankQDialog.__init__(self)
         # set up the UI
         self.ui = Ui_Dialog() 
-        self.ui.setupUi(self)
-    
-    def post_init(self, app):
+        self.ui.setupUi(self)    
         self._app = app
 
         # display the context in the title bar of the window

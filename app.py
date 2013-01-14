@@ -15,10 +15,9 @@ class RecentFiles(tank.platform.Application):
         Called as the application is being initialized
         """
         tk_multi_recentfiles = self.import_module("tk_multi_recentfiles")
-        self.app_handler = tk_multi_recentfiles.AppHandler(self)
-
+        cb = lambda : tk_multi_recentfiles.show_dialog(self)
         # add stuff to main menu
-        self.engine.register_command("Recent Work Files...", self.app_handler.show_dialog)
+        self.engine.register_command("Recent Work Files...", cb)
 
         # only launch the dialog once at startup
         # use tank object to store this flag
@@ -27,4 +26,4 @@ class RecentFiles(tank.platform.Application):
             tank._tk_multi_recent_files_shown = True
             # show the UI at startup - but only if the engine supports a UI
             if self.get_setting('launch_at_startup') and self.engine.has_ui:
-                self.app_handler.show_dialog()
+                tk_multi_recentfiles.show_dialog(self)

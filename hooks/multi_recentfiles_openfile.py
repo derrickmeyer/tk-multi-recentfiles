@@ -11,7 +11,7 @@ different. See code comments for details.
 """
 import tank
 import os
-from tank.platform.qt import QtCore, QtGui, TankQDialog
+from tank.platform.qt import QtGui
 
 class AddFileToScene(tank.Hook):
     
@@ -109,10 +109,7 @@ class AddFileToScene(tank.Hook):
             # TODO: handle this for the user!
             
             # the currently opened file has not been saved
-            QtGui.QMessageBox.information(None,
-                                          "Unsaved Changes Detected",
-                                          "Your current scene has unsaved changes. Please save it before proceeding.",
-                                          QtGui.QMessageBox.Ok)
+            mxs.messageBox("Your current scene has unsaved changes. Please save it before proceeding.")
             return
                     
         else:
