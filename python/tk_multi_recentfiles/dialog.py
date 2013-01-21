@@ -7,23 +7,20 @@ import os
 import sys
 import threading
 
-from tank.platform.qt import QtCore, QtGui, TankQDialog
+from tank.platform.qt import QtCore, QtGui
 from .ui.dialog import Ui_Dialog
 
-class AppDialog(TankQDialog):
+class AppDialog(QtGui.QWidget):
 
     def __init__(self, app):
-        TankQDialog.__init__(self)
+        QtGui.QWidget.__init__(self)
         # set up the UI
         self.ui = Ui_Dialog() 
         self.ui.setupUi(self)    
         self._app = app
-
+        
         # display the context in the title bar of the window
         ctx = self._app.context        
-        
-        # fallback if no context known
-        ctx_name = "Recent Files"
         
         if ctx.project:
             # Ghosts
@@ -32,16 +29,14 @@ class AppDialog(TankQDialog):
         if ctx.project and ctx.entity:
             # Ghosts, Shot ABC
             ctx_name = "%s, %s %s" % (ctx.project["name"], ctx.entity["type"], ctx.entity["name"])
-
+    
         if ctx.step and ctx.project and ctx.entity:
             # Ghosts, Shot ABC, Lighting
             ctx_name = "%s, %s %s, %s" % (ctx.project["name"], ctx.entity["type"], ctx.entity["name"], ctx.step["name"])
         
-        self.setWindowTitle(ctx_name)
-        
         # set up the browsers
         self.ui.browser.set_app(self._app)
-        self.ui.browser.set_label("Tank Recent Work Files")
+        self.ui.browser.set_label(ctx_name)
         
         self.ui.browser.action_requested.connect( self.load_item )
         self.ui.browser.history_item_action.connect( self.load_item_from_path )
@@ -56,25 +51,10 @@ class AppDialog(TankQDialog):
     # make sure we trap when the dialog is closed so that we can shut down 
     # our threads. Nuke does not do proper cleanup on exit.
     
-    def _cleanup(self):
-        self.ui.browser.destroy()
-        
     def closeEvent(self, event):
-        self._cleanup()
+        self.ui.browser.destroy()
         # okay to close!
         event.accept()
-        
-    def accept(self):
-        self._cleanup()
-        TankQDialog.accept(self)
-        
-    def reject(self):
-        self._cleanup()
-        TankQDialog.reject(self)
-        
-    def done(self, status):
-        self._cleanup()
-        TankQDialog.done(self, status)
         
     ########################################################################################
     # basic business logic        
