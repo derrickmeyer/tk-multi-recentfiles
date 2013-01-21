@@ -95,7 +95,7 @@ class AppDialog(QtGui.QWidget):
                                file_path=path)
         
         # close dialog
-        self.done(0)
+        self.close()
         
         
         
