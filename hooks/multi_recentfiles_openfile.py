@@ -32,6 +32,9 @@ class AddFileToScene(tank.Hook):
         elif self.parent.engine.name == "tk-3dsmax":
             self.load_item_from_path_3dsmax(file_path)
 
+        elif self.parent.engine.name == "tk-photoshop":
+            self.load_item_from_path_photoshop(file_path)
+
         else:
             raise tank.TankError("Unsupported engine '%s'!" % engine_name)
                 
@@ -115,3 +118,8 @@ class AddFileToScene(tank.Hook):
         else:
             # no need to save any change. load new file.
             mxs.loadMaxFile(path)
+
+    def load_item_from_path_photoshop(self, path):
+        import photoshop
+        f = photoshop.RemoteObject('flash.filesystem.File', path)
+        photoshop.app.load(f)
