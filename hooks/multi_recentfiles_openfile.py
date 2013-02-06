@@ -121,5 +121,5 @@ class AddFileToScene(tank.Hook):
 
     def load_item_from_path_photoshop(self, path):
         import photoshop
-        f = photoshop.RemoteObject('flash.filesystem.File', path)
+        f = photoshop.RemoteObject('flash.filesystem::File', path)
         photoshop.app.load(f)
