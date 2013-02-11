@@ -20,20 +20,8 @@ class AppDialog(QtGui.QWidget):
         self._app = app
         
         # display the context in the title bar of the window
-        ctx = self._app.context        
-        
-        if ctx.project:
-            # Ghosts
-            ctx_name = "%s" % ctx.project["name"]
-        
-        if ctx.project and ctx.entity:
-            # Ghosts, Shot ABC
-            ctx_name = "%s, %s %s" % (ctx.project["name"], ctx.entity["type"], ctx.entity["name"])
-    
-        if ctx.step and ctx.project and ctx.entity:
-            # Ghosts, Shot ABC, Lighting
-            ctx_name = "%s, %s %s, %s" % (ctx.project["name"], ctx.entity["type"], ctx.entity["name"], ctx.step["name"])
-        
+        ctx_name = str(self._app.context)        
+                
         # set up the browsers
         self.ui.browser.set_app(self._app)
         self.ui.browser.set_label(ctx_name)
