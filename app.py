@@ -17,7 +17,7 @@ class RecentFiles(tank.platform.Application):
         tk_multi_recentfiles = self.import_module("tk_multi_recentfiles")
         cb = lambda : tk_multi_recentfiles.show_dialog(self)
         # add stuff to main menu
-        self.engine.register_command("recent_files", cb, {"title": "Recent Work Files..."})
+        self.engine.register_command("Recent Work Files...", cb)
 
         # only launch the dialog once at startup
         # use tank object to store this flag
