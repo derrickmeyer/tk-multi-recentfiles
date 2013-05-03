@@ -35,11 +35,27 @@ class AddFileToScene(tank.Hook):
         elif self.parent.engine.name == "tk-photoshop":
             self.load_item_from_path_photoshop(file_path)
 
+        elif self.parent.engine.name == 'tk-hiero':
+            self.load_item_from_path_hiero(file_path)
+
         else:
             raise tank.TankError("Unsupported engine '%s'!" % engine_name)
                 
         
         ##########################################################################################
+
+    def load_item_from_path_hiero(self, path):
+
+        import hiero
+
+        # close open projects
+        hiero.core.closeAllProjects(False)
+
+        # fix slashes
+        path = path.replace(os.sep, '/')
+        # open
+        hiero.core.openProject(path)
+
         
     def load_item_from_path_nuke(self, path):
         
