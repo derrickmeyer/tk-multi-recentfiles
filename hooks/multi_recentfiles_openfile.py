@@ -60,6 +60,9 @@ class AddFileToScene(tank.Hook):
 
         # fix slashes
         path = path.replace(os.sep, '/')
+        # manually fire signal since Hiero doesn't fire this when loading 
+        # from the tk file manager
+        hiero.core.events.sendEvent("kBeforeProjectLoad", None)
         # open
         hiero.core.openProject(path)
 
